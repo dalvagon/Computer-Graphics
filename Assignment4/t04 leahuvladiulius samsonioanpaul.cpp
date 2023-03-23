@@ -149,8 +149,9 @@ std::list<std::pair<int, int>> A4Circle(int R) {
 	int dE = 3, dSE = -2 * R + 5;
 
 	while (y >= x) {
-		//M.push_back(std::pair<int, int>(x, y));
+		// M.push_back(std::pair<int, int>(x, y));
 		M.push_back(std::pair<int, int>(y, x));
+		// Thicken the line
 		M.push_back(std::pair<int, int>(y + 1, x));
 		M.push_back(std::pair<int, int>(y - 1, x));
 
@@ -175,12 +176,13 @@ class Grid {
 private:
 	int n;	// the number of rows / columns
 	double r;	// the radius of the circle 
+	double e;
 
 	// Map the i-th row / column to the corresponding c coordinate
 	double map(double i) {
 		double c = i / (n * 1.0);
 		// Map x from [0, 1] to [-1, 1]
-		c = 2 * c - 1;
+		c = 2 * c * (1 - e) + e - 1;
 
 		return c;
 	}
@@ -189,6 +191,7 @@ public:
 	Grid(int n) {
 		this->n = n;
 		this->r = 1 / (n * 1.9);
+		this->e = r * 2.1;
 	}
 
 	~Grid() {}
@@ -198,19 +201,19 @@ public:
 		glLineWidth(1);
 		// vertical lines
 		glBegin(GL_LINES);
-		for (int i = 0; i <= n; i++) {
+		for (double i = 0; i <= n; i++) {
 			double x = this->map(i);
-			glVertex2f(x, 1.0);
-			glVertex2f(x, -1.0);
+			glVertex2f(x, 1.0 - e);
+			glVertex2f(x, -1.0 + e);
 		}
 		glEnd();
 
 		// horizontal lines
 		glBegin(GL_LINES);
-		for (int i = 0; i <= n; i++) {
+		for (double i = 0; i <= n; i++) {
 			double y = this->map(i);
-			glVertex2f(1.0, y);
-			glVertex2f(-1.0, y);
+			glVertex2f(1.0 - e, y);
+			glVertex2f(-1.0 + e, y);
 		}
 		glEnd();
 	}
@@ -245,7 +248,7 @@ public:
 		glEnd();
 
 		// Choose the algorithm
-		auto pixels = A3(i, j, k, l);
+		auto pixels = A2(i, j, k, l);
 		for (auto it = pixels.begin(); it != pixels.end(); ++it) {
 			writePixel(it->first, it->second);
 		}
@@ -259,12 +262,11 @@ public:
 		double pi = 4 * atan(1.0);
 		glColor3f(0.1, 0.2, 0.3);
 		glLineWidth(4);
-		/*glBegin(GL_LINE_STRIP);
+		glBegin(GL_LINE_STRIP);
 		for (double i = 0; i <= pi / 2; i += pi / 30) {
-			printf("%f %f\n", map(R * cos(i)), map(R * sin(i)));
 			glVertex2f(map(R * cos(i)), map(R * sin(i)));
 		}
-		glEnd();*/
+		glEnd();
 
 		for (auto it = pixels.begin(); it != pixels.end(); ++it) {
 			writePixel(it->first, it->second);
@@ -283,7 +285,7 @@ void Init(void) {
 }
 
 void Display1(void) {
-	Grid grid(20);
+	Grid grid(30);
 	grid.draw();
 
 	//grid.drawLine(1, 1, 4, 3);
@@ -296,16 +298,17 @@ void Display1(void) {
 
 	grid.drawLine(0, 15, 15, 10);
 	grid.drawLine(15, 7, 0, 0);
+
 }
 
 void Display2() {
-	/*Grid grid(20);
+	Grid grid(15);
 	grid.draw();
 
-	grid.drawCircle(13);*/
+	grid.drawCircle(13);
 
-	Grid grid(1000);
-	grid.drawCircle(900);
+	/*Grid grid(1000);
+	grid.drawCircle(900);*/
 }
 
 void Display() {
