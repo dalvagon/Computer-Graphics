@@ -90,7 +90,7 @@ void Display5() {
 		}
 	}
 
-	/*double x1 = vertices[0][0];
+	double x1 = vertices[0][0];
 	double y1 = vertices[0][1];
 	double z1 = vertices[0][2];
 	double x2 = vertices[1][0];
@@ -98,13 +98,13 @@ void Display5() {
 	double z2 = vertices[1][2];
 	double x3 = vertices[2][0];
 	double y3 = vertices[2][1];
-	double z3 = vertices[2][2];*/
+	double z3 = vertices[2][2];
 
 	//printf("x1 = %f, y1 = %f, z1 = %f\n", x1, y1, z1);
 	//printf("x2 = %f, y2 = %f, z2 = %f\n", x2, y2, z2);
 	//printf("x3 = %f, y3 = %f, z3 = %f\n", x3, y3, z3);
 
-	double x1 = vertices[0][0] = -1.910;
+	/*double x1 = vertices[0][0] = -1.910;
 	double y1 = vertices[0][1] = -3.822;
 	double z1 = vertices[0][2] = -3.128;
 	double x2 = vertices[1][0] = -1.9603;
@@ -112,7 +112,7 @@ void Display5() {
 	double z2 = vertices[1][2] = -2.8713;
 	double x3 = vertices[2][0] = -2.155;
 	double y3 = vertices[2][1] = -3.0150;
-	double z3 = vertices[2][2] = 3.079;
+	double z3 = vertices[2][2] = 3.079;*/
 
 	glColor3f(1.0, 0.0, 0.0);
 	DisplayTriangle();
@@ -184,7 +184,7 @@ void Display5() {
 }
 
 void Display6() {
-	double N = 10;
+	double N = 30;
 
 	glColor3f(0.3, 0.7, 0.8);
 
