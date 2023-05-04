@@ -56,16 +56,26 @@ void DisplayCabinet(double alpha) {
 
 void DisplayOVP()
 {
+	double alpha = -30;
+	double pi = 4 * atan(1);
+	double cabinet[16] = {
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		-cos(alpha * pi / 180) / 2, sin(alpha * pi / 180) / 2, 1, 0,
+		0, 0, 0, 1
+	};
+
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glFrustum(-10.0, 10.0, -10.0, 10.0, -10.0, 100.0);
+	glFrustum(-5, 7, -5, 7, 2, 100);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glPushMatrix();
-	gluLookAt(0.0, 0.0, 5.0,
-		0.0, 0.0, 0.0,
-		0.0, 1.0, 0.0);
+	glTranslated(0, 0, -lat * 2);
+	glTranslated(-lat * 2, 0, 0);
+	glTranslated(0, -lat * 2, 0);
+	glMultMatrixd(cabinet);
 	DisplayAxe();
 	DisplayObiect();
 	glPopMatrix();
@@ -136,6 +146,7 @@ void Display()
 		glTranslated(lat / 2.0, lat / 2.0, lat / 2.0);
 		glRotated(-90, 0, 1, 0);
 		glTranslated(-lat / 2.0, -lat / 2.0, -lat / 2.0);
+		//glTranslated(0, 0, -lat);
 		DisplayAxe();
 		DisplayObiect();
 		glPopMatrix();
